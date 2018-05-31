@@ -1,0 +1,127 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 80px;
+  padding: 20px;
+  color: white;
+  background-image: url(game_header.jpg);
+  background-size: 200px 100px;  
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+body {
+  font-family: 'Open Sans', serif;
+ /* background-color: #FEFFFE;*/
+   background-color: rgb(234, 230, 229);
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+.game-circle{
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  background-color: #F0E68C;
+  border: 2px solid #DAA520;
+  text-align: center;
+  display: inline-block;
+}
+
+.simple-game-circle{
+  background-color: red;
+  color: white;
+}
+
+.other-game-circle{
+  background-color: blue;
+  color: white;
+}
+
+.navbar{
+  padding-bottom:8px;
+  margin: 0 auto;
+  text-align: center;
+
+}
+
+.navbar-links{
+  width: 100px;
+  padding: 10px;
+  margin: 0 6px 6px;
+  background: blue;
+  textDecoration: none;
+  color: white;
+}
+
+.hi-scores{
+  overflow: scroll;
+  height: 240px;
+  padding-left: 8%;
+  background-color: #f3f3f3;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.snake-score-button{
+  margin: auto;
+  width: 50%;
+  display: inline-block;
+
+}
+
+
+.snake-container{
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+
+.twenty-container{
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
+.twenty-score-button{
+  margin: auto;
+  width: 50%;
+  display: inline-block;
+}
+
+.twenty-button{
+
+}
+
+.game-view{
+  height: 760px;
+}
+
+
+
+
+.horizontal-list{
+  margin: 0 auto;
+  width: 95%;
+  display: inline-block;
+}
