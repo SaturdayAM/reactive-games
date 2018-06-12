@@ -1,63 +1,37 @@
 import React from 'react';
-/*
-	props={
-		handleSignin: App::handleLogin()
-	}
-*/
+import { connect } from "react-redux";
 
-class Signin extends React.Component{
-	constructor(props){
-		super(props);
-		this.state = {
-			username: "",
-			password: ""
-		}
-	}
+import * as actions from '../redux_components/actions'
 
-	handleSubmit = (e) =>{
-		e.preventDefault();
-		if(this.state.username && this.state.password){
-			this.props.handleSignin(this.state);
-			this.setState({
-				username:"",
-				password:""
-			})	
-		}else{
-			alert("Please enter both a username and password!")
-			this.setState({
-				username:"",
-				password:""
-			})
-		}
-	}
-
-	handleInputChange = (e) =>{
-		this.setState({
-			[e.target.name] : e.target.value
-		})
-	}
-
-	render(){
-		return(
-			<div>
-				<h1>Signin.js</h1>
-				<form onSubmit={this.handleSubmit}>
-				  <label >
-				    Username:
-				    <input type="text" name="username" 
-				    	   onChange={this.handleInputChange}
-				    	   value={this.state.username}/>
-				  </label>
-				  <label>
-				    Password:
-				    <input type="password" name="password" 
-				    	   onChange={this.handleInputChange}
-				    	   value={this.state.password}/>
-				  </label>
-				  <input type="submit" value="Submit" />
-				</form>
-			</div>
-		)	
-	}
+const Signin = (props) =>{
+	return(
+		<div>
+			<h1>Signin.js</h1>
+			<form onSubmit={(e)=>props.handleSigninSubmit(e, {username: props.username,
+															  password: props.password})}>
+			  <label >
+			    Username:
+			    <input type="text" name="username" 
+			    	   onChange={props.handleSigninInputChange}
+			    	   value={props.username}/>
+			  </label>
+			  <label>
+			    Password:
+			    <input type="password" name="password" 
+			    	   onChange={props.handleSigninInputChange}
+			    	   value={props.password}/>
+			  </label>
+			  <input type="submit" value="Submit" />
+			</form>
+		</div>
+	)	
 }
-export default Signin;
+
+const mapStateToProps = state => ({
+	username: state.signin.username,
+	password: state.signin.password		
+});
+
+export default connect(mapStateToProps, actions)(Signin);
+
+

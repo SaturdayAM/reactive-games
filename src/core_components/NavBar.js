@@ -1,10 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-/* Add basic styling for NavLinks */
-const link = {
-
-}
 
 const NavBar = () => {
   return (
