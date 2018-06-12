@@ -1,38 +1,20 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import { Button } from 'semantic-ui-react'
 
-
 import Circle from './Circle'
-
-/*
-	props={
-		currentUser: GameViewer.props.currentUser
-		submitGameScore: GameViewer::submitGameScore()
-	}
-*/
+import * as actions from "../redux_components/actions"
 
 
 class SimpleGame extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {
-			score: 0,
-			gameTime: 10,
-			inGame: false
-		}
 	}
-
 
 	componentWillUnmount(){
 		this.cleanUpInterval();
+		this.props.handleEndGame();
 	}
-
-	clickedButton = () =>{
-		this.setState({
-			score: this.state.score + 1
-		})
-	}
-
 
 	startInterval = () => {
 	    this.interval = setInterval(this.updateCounter, 1000);
@@ -43,59 +25,57 @@ class SimpleGame extends React.Component{
 	}
 
 	updateCounter = () => {
-		if(this.state.gameTime <= 0){
-			this.props.submitGameScore(this.state.score);
+		if(this.props.gameTime <= 0){
+			this.props.handleSubmitScore({score: this.props.score,
+										  currentUser: this.props.currentUser,
+										  currentGame: this.props.currentGame})
 			this.cleanUpInterval();
-			this.setState({
-				score: 0,
-				gameTime: 10,
-				inGame: false
-			})
+			this.props.handleEndGame();
 		} else{
-		    this.setState({
-			      gameTime: this.state.gameTime - 1
-		    }) //end setState
+			this.props.handleGameTime();
 		}
 	}
 
-
-	handleStartGame = () =>{
-		console.log("handleStartGame")
-		this.setState({
-			inGame: true
-		})
+	startGame = () =>{
 		this.startInterval();
+		this.props.handleStartGame(10);
 	}
 
 	getGameDisplay = () =>{
 		return(
 			<div>
-				<h4>Time Left: {this.state.gameTime}</h4>
-				<Circle clickedButton={this.clickedButton}
-						secondClass="simple-game-circle"/>
+				<h4>Time Left: {this.props.gameTime}</h4>
+				<Circle/>
 			</div>
 		)
 	}
 
 	getStartButton = () =>{
 		return(
-			<Button primary onClick={this.handleStartGame}>
+			<Button primary onClick={this.startGame}>
 				Start Game
 			</Button>
 		)
 	}
 	render(){
-		let toDisplay = this.state.inGame ?
+		let toDisplay = this.props.inGame ?
 						  this.getGameDisplay(): this.getStartButton()
 		return(
 			<div style={{margin: 10, border: "1px solid blue"}}>
 				<h1>SimpleGame.js</h1>
-				<h3>Your Score: {this.state.score}</h3>
+				<h3>Your Score: {this.props.score}</h3>
 				{toDisplay}
-
 			</div>
 		)
 	}
 }
 
-export default SimpleGame;
+const mapStateToProps = state => ({
+	score: state.score,
+	gameTime: state.gameTime,
+	inGame: state.inGame,
+	currentUser: state.currentUser,
+	currentGame: state.currentGame
+})
+
+export default connect(mapStateToProps, actions)(SimpleGame);

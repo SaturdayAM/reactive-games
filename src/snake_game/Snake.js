@@ -1,5 +1,8 @@
 import React from 'react';
-import {Header} from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import {Header} from 'semantic-ui-react';
+
+import * as actions from "../redux_components/actions";
 
 /*
 	Referred to the following tutorial for the snake game:
@@ -30,13 +33,7 @@ let length = 5;
 class Snake extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {
-			score:0,
-			gameTime: 60,
-			inGame: false
-		}
 	}
-
 	componentDidMount(){
 		let canvas = document.getElementById("gc");
 		let context = canvas.getContext("2d");
@@ -83,9 +80,8 @@ class Snake extends React.Component{
 			//if tail collision
 			if(trail[i].x==player_x &&trail[i].y==player_y){
 				length = 5;
-				this.setState({
-					score: Math.ceil(this.state.score/2)
-				})
+				let decrement = Math.ceil(this.props.score/2)
+				this.props.handleSetGameScore(-decrement);
 			}
 		}
 
@@ -103,27 +99,17 @@ class Snake extends React.Component{
 		//if reached egg
 		if(egg_x == player_x && egg_y == player_y){
 			length++; //grow snake
-
 			//move the egg
 			egg_x = Math.floor(Math.random()*g_height);
 			egg_y = Math.floor(Math.random()*g_height);
-			this.setState({
-				score: ++this.state.score
-			})
+			this.props.handleSetGameScore(1);
 		}
 
 	}
 	endGame = () =>{
 		this.cleanUpInterval();
-		this.props.submitGameScore(this.state.score);
-		this.setState({
-			score: 0,
-			gameTime: 60, 
-			inGame: false
-		})
 		x_vel=0;
 		y_vel=0;
-
 		//player position
 		player_x = 10;
 		player_y = 10;
@@ -142,14 +128,16 @@ class Snake extends React.Component{
 		//starting length of snake
 		length = 5;
 
+		this.props.handleSubmitScore({score: this.props.score,
+									  currentUser: this.props.currentUser,
+									  currentGame: this.props.currentGame});
+		this.props.handleEndGame();
 	}
 	startGame = (e) =>{
 		let canvas = document.getElementById("gc");
 		let context = canvas.getContext("2d");
 		document.addEventListener("keydown", this.keyPush);
-		this.setState({
-			inGame:true
-		})
+		this.props.handleStartGame(60);
 		this.interval = setInterval(()=>{this.game(context, canvas)}, 1000/15);
 		this.timer = setInterval(this.updateCounter, 1000);
 	}
@@ -160,12 +148,10 @@ class Snake extends React.Component{
 	}
 
 	updateCounter = () => {
-		if(this.state.gameTime <= 0){
+		if(this.props.gameTime <= 0){
 			this.endGame();
 		} else{
-		    this.setState({
-			      gameTime: this.state.gameTime - 1
-		    }) //end setState
+			this.props.handleGameTime();
 		}
 	}
 
@@ -199,8 +185,8 @@ class Snake extends React.Component{
 						Snake.js
 					</Header>
 					<span className="snake-score-button">
-					<b>Score: {this.state.score} Time: {this.state.gameTime}</b>
-					{this.state.inGame ? <button onClick={this.endGame}
+					<b>Score: {this.props.score} Time: {this.props.gameTime}</b>
+					{this.props.inGame ? <button onClick={this.endGame}
 												 className="snake-button">
 										 End Game
 										 </button> :
@@ -216,4 +202,15 @@ class Snake extends React.Component{
 		)
 	}
 }
-export default Snake;
+
+const mapStateToProps = state => ({
+	score: state.score,
+	gameTime: state.gameTime,
+	inGame: state.inGame,
+	currentUser: state.currentUser,
+	currentGame: state.currentGame
+})
+
+
+
+export default connect(mapStateToProps, actions)(Snake);

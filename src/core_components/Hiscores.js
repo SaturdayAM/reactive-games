@@ -1,5 +1,8 @@
 import React from 'react';
-import { Image, List, Header } from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import { Image, List, Header } from 'semantic-ui-react';
+
+import * as actions from "../redux_components/actions"
 /*
 	props={
 		scores:[]
@@ -27,6 +30,7 @@ const getScores = (scoreArr) =>{
 		)
 	})
 }
+
 const Hiscores = (props) =>{
 	let {scores} = props;
 	return(
@@ -41,4 +45,8 @@ const Hiscores = (props) =>{
 	)
 }
 
-export default Hiscores;
+const mapStateToProps = state =>({
+	scores: state.scores
+})
+
+export default connect(mapStateToProps, actions)(Hiscores);

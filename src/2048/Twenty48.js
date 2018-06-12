@@ -1,6 +1,8 @@
 import React from 'react';
-import {Header} from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import {Header} from 'semantic-ui-react';
 
+import * as actions from "../redux_components/actions";
 
 /*
 	Referenced from the following tutorial:
@@ -8,27 +10,15 @@ import {Header} from 'semantic-ui-react'
 	https://github.com/amadevBox/2048
 */
 
-
-
 var size = 4;
 var width = 400/4 - 6;
 var cells = [];
 
-/*
-	props={
-		submitGameScore: GameViewer::submitGameScore
-	}
-*/
 
 class Twenty48 extends React.Component{
 	constructor(props){
 		super(props);
-		this.state = {
-			score:0,
-			inGame:false
-		}
 	}
-
 	componentDidMount(){
 		let canvas = document.getElementById("gc");
 		let context = canvas.getContext("2d");
@@ -45,10 +35,7 @@ class Twenty48 extends React.Component{
 	startGame = (e) =>{
 		this.createCells();
 		this.drawAllCells();
-		this.setState({
-			inGame: true
-		})
-		console.log("2048 started")
+		this.props.handleStartGame(60);
 	}
 
 	endGame = (e) =>{
@@ -56,11 +43,10 @@ class Twenty48 extends React.Component{
 		let context = canvas.getContext("2d");
 		context.fillStyle="black";
 		context.fillRect(0, 0, canvas.width, canvas.height);
-		this.props.submitGameScore(this.state.score);
-		this.setState({
-			score: 0,
-			inGame: false
-		})
+		this.props.handleSubmitScore({score: this.props.score,
+								      currentUser: this.props.currentUser,
+								      currentGame: this.props.currentGame})
+		this.props.handleEndGame();
 	}
 
 	moveUp = () =>{
@@ -76,9 +62,7 @@ class Twenty48 extends React.Component{
 						} //can add
 						else if(cells[temp_row - 1][col].value == cells[temp_row][col].value){
 							cells[temp_row - 1][col].value *=2;
-							this.setState({
-								score: this.state.score + cells[temp_row - 1][col].value
-							})
+							this.props.handleSetGameScore(cells[temp_row - 1][col].value);
 							cells[temp_row][col].value = 0;
 							break;
 						}
@@ -102,9 +86,7 @@ class Twenty48 extends React.Component{
 						} //can add
 						else if(cells[temp_row + 1][col].value == cells[temp_row][col].value){
 							cells[temp_row + 1][col].value *= 2;
-							this.setState({
-								score: this.state.score + cells[temp_row + 1][col].value
-							})
+							this.props.handleSetGameScore(cells[temp_row + 1][col].value)
 							cells[temp_row][col].value = 0;
 							break;
 						}
@@ -128,9 +110,7 @@ class Twenty48 extends React.Component{
 						} //can add if same value
 						else if(cells[row][temp_col].value == cells[row][temp_col-1].value){
 							cells[row][temp_col-1].value *=2;
-							this.setState({
-								score: this.state.score + cells[row][temp_col-1].value
-							})
+							this.props.handleSetGameScore(cells[row][temp_col-1].value);
 							cells[row][temp_col].value = 0;
 							break;
 						}
@@ -154,9 +134,7 @@ class Twenty48 extends React.Component{
 						} //can add if same value
 						else if(cells[row][temp_col].value == cells[row][temp_col+1].value){
 							cells[row][temp_col+1].value *=2;
-							this.setState({
-								score: this.state.score + cells[row][temp_col+1].value
-							})
+							this.props.handleSetGameScore(cells[row][temp_col+1].value);
 							cells[row][temp_col].value = 0;
 							break;
 						}
@@ -171,7 +149,7 @@ class Twenty48 extends React.Component{
 
 	keyPush = (e) =>{
 		let flag = e.keyCode;
-		if(!this.state.loss){
+		if(this.props.inGame){
 			switch(flag){
 				case 38: //up
 					this.moveUp();
@@ -287,12 +265,10 @@ class Twenty48 extends React.Component{
 				}
 			}
 		}
-
 		if(freeCells === 0){ //if no free cells, end game
 			this.endGame();
 			return;
 		}
-
 		while(true){
 			let row = Math.floor(Math.random()*size);
 			let col = Math.floor(Math.random()*size);
@@ -304,7 +280,6 @@ class Twenty48 extends React.Component{
 		}
 	}
 
-
 	render(){
 		return(
 			<div className="twenty-container">
@@ -312,8 +287,8 @@ class Twenty48 extends React.Component{
 					Twenty48.js
 				</Header>
 				<span className="twenty-score-button">
-					<b>Your Score: {this.state.score}</b>
-					{this.state.inGame ? <button onClick={this.endGame}
+					<b>Your Score: {this.props.score}</b>
+					{this.props.inGame ? <button onClick={this.endGame}
 								 className="twenty-button">
 						 End Game
 						 </button> :
@@ -323,11 +298,17 @@ class Twenty48 extends React.Component{
 						 </button>
 					}
 				</span>
-
 				<canvas id="gc" width="400" height="400"></canvas>
 			</div>
 		)
 	}
 }
 
-export default Twenty48;
+const mapStateToProps = state => ({
+	score: state.score,
+	inGame: state.inGame,
+	currentUser: state.currentUser,
+	currentGame: state.currentGame
+})
+
+export default connect(mapStateToProps, actions)(Twenty48);

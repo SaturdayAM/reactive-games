@@ -1,5 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from "react-redux";
+
+import{
+	CHANGE_CURRENT_GAME
+} from '../redux_components/actions/types'
+import * as actions from '../redux_components/actions'
+
 
 const GamesIndex = (props) =>{
 	console.log("GamesIndex", props)
@@ -8,7 +15,7 @@ const GamesIndex = (props) =>{
 			<h1>GamesIndex.js</h1>
 			<ul>
 			
-				<li onClick={(e)=>props.handleGamesIndexClick(e)}
+				<li onClick={(e)=>props.handleGamesIndexClick("Snake")}
 					name="Snake">
 					<NavLink
 						name="Snake"
@@ -18,7 +25,7 @@ const GamesIndex = (props) =>{
 					</NavLink>
 
 				</li>
-				<li onClick={(e)=>props.handleGamesIndexClick(e)}
+				<li onClick={(e)=>props.handleGamesIndexClick("2048")}
 					name="2048">
 					<NavLink
 						name="2048"
@@ -28,7 +35,7 @@ const GamesIndex = (props) =>{
 					</NavLink>
 
 				</li>
-				<li onClick={(e)=>props.handleGamesIndexClick(e)}
+				<li onClick={(e)=>props.handleGamesIndexClick("SimpleGame")}
 					name="SimpleGame">
 					<NavLink
 					 name="SimpleGame"
@@ -37,7 +44,7 @@ const GamesIndex = (props) =>{
 					SimpleGame
 					</NavLink>
 				</li>
-				<li onClick={(e)=>props.handleGamesIndexClick(e)}
+				<li onClick={(e)=>props.handleGamesIndexClick("OtherGame")}
 					name="OtherGame">
 					<NavLink
 						name="OtherGame"
@@ -53,4 +60,13 @@ const GamesIndex = (props) =>{
 	)
 }
 
-export default GamesIndex;
+// const mapDispatchToProps = dispatch =>{
+// 	return{
+// 		handleGamesIndexClick: e => dispatch({
+// 			type: CHANGE_CURRENT_GAME,
+// 			payload: {game: "Snake"}
+// 		})
+// 	}
+// }
+
+export default connect(null, actions)(GamesIndex);
