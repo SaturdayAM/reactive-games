@@ -2,12 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Phaser from 'phaser';
 
-import config from './config.js'
+import initGame from './initGame';
 import * as actions from "../redux_components/actions";
+import handleWindowArrows from '../redux_components/handleWindowArrows';
 
 class WatchYourBacon extends React.Component{
 	componentDidMount(){
-		var game = new Phaser.Game(config);
+		console.log("WatchYourBacon::componentDidMount()");
+		let game = initGame();
 	}
 	render(){
 		return(
