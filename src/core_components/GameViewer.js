@@ -5,6 +5,8 @@ import SimpleGame from '../simple_game/SimpleGame'
 import OtherGame from '../other_game/OtherGame'
 import Snake from '../snake_game/Snake'
 import Twenty48 from '../2048/Twenty48'
+import WatchYourBacon from '../phaser_game/WatchYourBacon'
+
 import Hiscores from './Hiscores'
 
 import * as actions from "../redux_components/actions"
@@ -34,6 +36,8 @@ class GameViewer extends React.Component{
 				return <Snake />
 			case "2048":
 				return <Twenty48 />
+			case "WatchYourBacon":
+				return <WatchYourBacon />
 			default:
 				return (<h1>NO GAME</h1>)
 		}

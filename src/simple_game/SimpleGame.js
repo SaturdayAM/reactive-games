@@ -7,10 +7,6 @@ import * as actions from "../redux_components/actions"
 
 
 class SimpleGame extends React.Component{
-	constructor(props){
-		super(props);
-	}
-
 	componentWillUnmount(){
 		this.cleanUpInterval();
 		this.props.handleEndGame();
