@@ -52,9 +52,16 @@ const GamesIndex = (props) =>{
 					>
 					OtherGame
 					</NavLink>
-
+				</li>				
+				<li onClick={(e)=>props.handleGamesIndexClick("WatchYourBacon")}
+					name="WatchYourBacon">
+					<NavLink
+						name="WatchYourBacon"
+						to="/"
+					>
+					Praise The Sun
+					</NavLink>
 				</li>		
-
 			</ul>
 		</div>
 	)
