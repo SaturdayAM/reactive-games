@@ -11,12 +11,7 @@ import Hiscores from './Hiscores'
 
 import * as actions from "../redux_components/actions"
 
-const baseUrl = "http://localhost:3000";
-
 class GameViewer extends React.Component{
-	constructor(props){
-		super(props);
-	}
 	componentDidMount(){
 		fetch("http://localhost:3000/games")
 			.then(response => response.json())

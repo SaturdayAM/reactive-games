@@ -27,6 +27,7 @@ const baseUrl = "http://localhost:3000";
 // They replace functions that would have been callback props, used
 // in conjunction with reducers to perform actions
 
+
 //************************** GamesIndex.js ***************************
 export function handleGamesIndexClick(game){
 	return{

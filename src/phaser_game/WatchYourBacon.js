@@ -1,13 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
+// import 'phaser';
+
+
 import Phaser from 'phaser';
-
-import config from './config.js'
+import GAME from './praiseTheSun/gameVariables'
+import initGame from './praiseTheSun/initGame';
 import * as actions from "../redux_components/actions";
+import handleWindowArrows from '../redux_components/handleWindowArrows';
 
+var game;
+//A component to view phaser game
 class WatchYourBacon extends React.Component{
 	componentDidMount(){
-		var game = new Phaser.Game(config);
+		game = initGame();
+	}
+	componentWillUnmount(){
+		game.destroy();
 	}
 	render(){
 		return(
@@ -17,6 +26,7 @@ class WatchYourBacon extends React.Component{
 		)
 	}
 }
+
 
 const mapStateToProps = state => ({
 	score: state.score,
