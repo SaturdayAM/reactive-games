@@ -50,7 +50,7 @@ class Menu extends Phaser.State{
 	}
 	update(){
 		if (this.game.input.activePointer.isDown){
-			// this.menuMusic.stop();
+			this.menuMusic.stop();
         	this.game.state.start('Play');
     	}
 	}

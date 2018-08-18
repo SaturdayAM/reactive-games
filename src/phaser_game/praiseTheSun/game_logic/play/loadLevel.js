@@ -76,7 +76,7 @@ const loadLevel = (playState) =>{
 	// self.loadMobileTouchControls(self);
 
 	//Load bonfire
-	loadBonfire(self)
+	// loadBonfire(self);
 	//Load coins
 	loadCoins(self);
 
