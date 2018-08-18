@@ -2,9 +2,9 @@
 //					    GAME variables		   		   //		
 // 													   //
 //*******************************************************
-const ROWS = 12;
-const COLS = 20;
-const TILE_SIZE= 42;
+const ROWS = 12; //12 tiles height
+const COLS = 20; //20 tiles width
+const TILE_SIZE= 42; //each tile is 42x42 pixels
 
 
 //Objects
@@ -41,7 +41,7 @@ var WALL;
 var heartGauge; //hearts.png
 var twitterButton;
 
-//2D array with tile values
+//2D array with tile values. Represents game map.
 /*
 	map = Automata.map = 12*20 matrix of strnums for tiles
 		0  		   ...        19
