@@ -23,10 +23,6 @@ class GameViewer extends React.Component{
 	getGame = () =>{
 		let flag = this.props.currentGame;
 		switch(flag){
-			case "SimpleGame":
-				return <SimpleGame />
-			case "OtherGame":
-				return <OtherGame />
 			case "Snake":
 				return <Snake />
 			case "2048":
