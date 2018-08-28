@@ -24,6 +24,15 @@ class WatchYourBacon extends React.Component{
 		this.props.handleSubmitScore({score: GAME.score,
 						      currentUser: this.props.currentUser,
 						      currentGame: this.props.currentGame})
+		this.props.handleEndGame();
+		game.destroy();
+		GAME.score = 0;
+		GAME.level = 0;
+		GAME.coins_left = 12;
+		GAME.coin_count = 12;
+		GAME.coin_total = 0;
+		GAME.move_total = 0;
+		game = initGame();
 	}
 
 	render(){
