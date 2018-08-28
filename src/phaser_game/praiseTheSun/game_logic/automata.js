@@ -7,7 +7,6 @@ class Automata{
 		this.lifeCycles = 0;
 		this.cells = [];
 		this.minimumLifeCycles = 40;
-		this.spawnChance = 7;
 		this.resetMap();
 	}
 	/*
@@ -42,11 +41,6 @@ class Automata{
 				if(currentCell.alive){
 					this.lifeCycles +=1; 
 					this.map = currentCell.cycle(this.map);
-					//Chance to spawn cell
-					// let flag = Math.floor(Math.random()*100);
-					// if(flag <= this.spawnChance){
-
-					// }
 
 				} else{
 					//Remove current cell from this.cells

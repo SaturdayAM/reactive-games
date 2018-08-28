@@ -39,52 +39,52 @@ const moveActor = (actor, direction, playState) =>{
 	//located at actorMap[actorKey]
 	let actorKey = `${actor.ty+direction.y}_${actor.tx+direction.x}`
 
-	if(GAME.actorMap[actorKey] != undefined){ //if actor on actorMap
-		console.log("Hit a thing!", GAME.actorMap[actorKey])
-		//handle hitting another sprite, coin
-		let coin = GAME.actorMap[actorKey];
-		let i = GAME.coinList.indexOf(coin);
+	//handle hitting another sprite, coin
+	let coin = GAME.actorMap[actorKey];
+	let i = GAME.coinList.indexOf(coin);
+	
+	if(coin != undefined && i >-1){ //if the tile is a coin
+		console.log("Hit a coin!")
+
 		//Remove previous location 
 		GAME.actorMap[`${actor.ty}_${actor.tx}`] = null;
 
+		//Increment coin total
+		GAME.coin_total++;
+		GAME.coinsText.setText('Coins: ' + GAME.coin_total);
 
-		if(i > -1){ //if is a coin
-			//Increment coin total
-			GAME.coin_total++;
-			GAME.coinsText.setText('Coins: ' + GAME.coin_total);
+		//Remove coin from game
+		GAME.coinList.splice(i, 1); //remove from arr
+		coin.kill();
 
-			//Remove coin from game
-			GAME.coinList.splice(i, 1); //remove from arr
-			coin.kill();
+		//Update score
+		let toAdd = Math.ceil(30/GAME.move_total);
 
-			//Update score
-			let toAdd = Math.ceil(30/GAME.move_total);
+		GAME.score+= toAdd;
+		GAME.scoreText.setText('Score: ' + GAME.score);
 
-			GAME.score+= toAdd;
-			GAME.scoreText.setText('Score: ' + GAME.score);
+		//Execute action to update score in state
+		actions.handleSetGameScore(GAME.score);
 
-			//Execute action to update score in state
-			actions.handleSetGameScore(GAME.score);
+		//Update GAME.coins_left
+		GAME.coins_left--;
 
-			//Update GAME.coins_left
-			GAME.coins_left--;
+		//Update tile coordinates
+		actor.tx += direction.x
+		actor.ty += direction.y
 
-			//Update tile coordinates
-			actor.tx += direction.x
-			actor.ty += direction.y
+		//Update canvas coordinates
+		actor.x = actor.tx*GAME.TILE_SIZE;
+		actor.y = actor.ty*GAME.TILE_SIZE;
 
-			//Update canvas coordinates
-			actor.x = actor.tx*GAME.TILE_SIZE;
-			actor.y = actor.ty*GAME.TILE_SIZE;
-
-			//Add actor's new location to actorMap
-			GAME.actorMap[`${actor.ty}_${actor.tx}`] = actor;	
-			if(GAME.coins_left < 1){
-				GAME.winMsg = self.game.add.bitmapText(GAME.w/2, GAME.h/2, 'minecraftia', "Level Complete!\nPress Space to Continue.", 24);
-				GAME.winMsg.tint = 0x00ff00;
-				GAME.winMsg.anchor.setTo(0.5); 
-			}
+		//Add actor's new location to actorMap
+		GAME.actorMap[`${actor.ty}_${actor.tx}`] = actor;	
+		if(GAME.coins_left < 1){
+			GAME.winMsg = self.game.add.bitmapText(GAME.w/2, GAME.h/2, 'minecraftia', "Level Complete!\nPress Space to Continue.", 24);
+			GAME.winMsg.tint = 0x00ff00;
+			GAME.winMsg.anchor.setTo(0.5); 
 		}
+
 
 	}/*endif*/else{
 		//Just move
