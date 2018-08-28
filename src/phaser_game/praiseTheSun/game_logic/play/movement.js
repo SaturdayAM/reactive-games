@@ -1,5 +1,5 @@
 import GAME from '../../gameVariables';
-
+import * as actions from "../../../../redux_components/actions";
 //Determines if a sprite is out of canvas bounds
 //or if the grid cell already has a sprite
 const isMovable = (actor, direction) =>{
@@ -62,6 +62,9 @@ const moveActor = (actor, direction, playState) =>{
 
 			GAME.score+= toAdd;
 			GAME.scoreText.setText('Score: ' + GAME.score);
+
+			//Execute action to update score in state
+			actions.handleSetGameScore(GAME.score);
 
 			//Update GAME.coins_left
 			GAME.coins_left--;

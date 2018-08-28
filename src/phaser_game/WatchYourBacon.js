@@ -21,7 +21,7 @@ class WatchYourBacon extends React.Component{
 
 	endGame = (e) => {
 		console.log("WatchYourBacon::endGame")
-		this.props.handleSubmitScore({score: this.props.score,
+		this.props.handleSubmitScore({score: GAME.score,
 						      currentUser: this.props.currentUser,
 						      currentGame: this.props.currentGame})
 	}
@@ -30,7 +30,6 @@ class WatchYourBacon extends React.Component{
 		return(
 			<div id="phaser-canvas">
 				<span className="twenty-score-button">
-					<b>Your Score: {this.props.score}</b>
 					<button onClick={this.endGame}>
 						 Submit Score
 					</button>
