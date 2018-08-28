@@ -21,7 +21,7 @@ import {
 	}
 */
 
-const currentGameReducer = (state = "2048", action) =>{
+const currentGameReducer = (state = "WatchYourBacon", action) =>{
 	switch(action.type){
 		case CHANGE_CURRENT_GAME:
 			return action.payload.game;

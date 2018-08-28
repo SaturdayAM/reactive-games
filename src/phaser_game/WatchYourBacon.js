@@ -18,10 +18,23 @@ class WatchYourBacon extends React.Component{
 	componentWillUnmount(){
 		game.destroy();
 	}
+
+	endGame = (e) => {
+		console.log("WatchYourBacon::endGame")
+		this.props.handleSubmitScore({score: this.props.score,
+						      currentUser: this.props.currentUser,
+						      currentGame: this.props.currentGame})
+	}
+
 	render(){
 		return(
-			<div style={{margin: 10, border: "1px solid cyan"}} id="phaser-canvas">
-				<h2>WatchYourBacon.js</h2>
+			<div id="phaser-canvas">
+				<span className="twenty-score-button">
+					<b>Your Score: {this.props.score}</b>
+					<button onClick={this.endGame}>
+						 Submit Score
+					</button>
+				</span>
 			</div>
 		)
 	}

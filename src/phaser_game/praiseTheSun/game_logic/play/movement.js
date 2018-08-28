@@ -81,14 +81,7 @@ const moveActor = (actor, direction, playState) =>{
 				GAME.winMsg.tint = 0x00ff00;
 				GAME.winMsg.anchor.setTo(0.5); 
 			}
-		} else if(coin == GAME.bonfire){
-			console.log("IS BONFIRE")
 		}
-
-		//if is a bonfire
-
-
-		//if is a bomb
 
 	}/*endif*/else{
 		//Just move
