@@ -27,7 +27,7 @@ Current games include Snake, 2048, and a custom dungeon crawler built using phas
 Current known bugs:
 
 `Praise the Sun` 
-  * Levels 8 and 10 have inacessible floor tiles.
+  * Levels 8 and 10 have inacessible floor tiles. - Fixed
 
 
 ## Sending Feedback
