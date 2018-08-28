@@ -34,25 +34,7 @@ const GamesIndex = (props) =>{
 					2048
 					</NavLink>
 
-				</li>
-				<li onClick={(e)=>props.handleGamesIndexClick("SimpleGame")}
-					name="SimpleGame">
-					<NavLink
-					 name="SimpleGame"
-					   to="/"
-					>
-					SimpleGame
-					</NavLink>
-				</li>
-				<li onClick={(e)=>props.handleGamesIndexClick("OtherGame")}
-					name="OtherGame">
-					<NavLink
-						name="OtherGame"
-						to="/"
-					>
-					OtherGame
-					</NavLink>
-				</li>				
+				</li>		
 				<li onClick={(e)=>props.handleGamesIndexClick("WatchYourBacon")}
 					name="WatchYourBacon">
 					<NavLink
